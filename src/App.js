@@ -1,5 +1,7 @@
 import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import * as React from "react";
+import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -17,14 +19,10 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import SpeedIcon from "@mui/icons-material/Speed";
 import BuildIcon from "@mui/icons-material/Build";
 import FolderIcon from "@mui/icons-material/Folder";
-import Chart from "./chart.js";
+import Chart from "./Components/chart.js";
 import { useNavigate } from "react-router";
 import { Routes, Route } from "react-router-dom";
 import { styled } from "@mui/material/styles";
-import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
-import MuiAccordion from "@mui/material/Accordion";
-import MuiAccordionSummary from "@mui/material/AccordionSummary";
-import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import TableChartIcon from "@mui/icons-material/TableChart";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import SearchIcon from "@mui/icons-material/Search";
@@ -41,48 +39,20 @@ import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
 import ListIcon from "@mui/icons-material/List";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Button from "@mui/material/Button";
-import { Dashboard } from "./Dashboard";
-import { Cards } from "./Cards";
-import { Buttons } from "./Buttons";
-import { Colors } from "./Colors";
-import { Borders } from "./Borders";
-import { Others } from "./Others";
-import { Animations } from "./Animations";
+import { Dashboard } from "./Components/Dashboard";
+import { Cards } from "./Components/Cards";
+import { Buttons } from "./Components/Buttons";
+import { Colors } from "./Components/Colors";
+import { Borders } from "./Components/Borders";
+import { Others } from "./Components/Others";
+import { Animations } from "./Components/Animations";
+import { TableData } from "./Components/Table";
+import { NotFound } from "./Components/NotFound";
+import { Accordion } from "react-bootstrap";
+import { EditUser } from "./Components/Users/EditUser";
+import { AddUser } from "./Components/Users/AddUser";
 
 const drawerWidth = 200;
-
-const Accordion = styled((props) => (
-  <MuiAccordion disableGutters elevation={0} square {...props} />
-))(({ theme }) => ({
-  border: `1px solid ${theme.palette.divider}`,
-  "&:not(:last-child)": {
-    borderBottom: 0,
-  },
-  "&:before": {
-    display: "none",
-  },
-}));
-
-const AccordionSummary = styled((props) => (
-  <MuiAccordionSummary
-    expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: "0.9rem" }} />}
-    {...props}
-  />
-))(({ theme }) => ({
-  backgroundColor: "#4e73df",
-  flexDirection: "row-reverse",
-  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-    transform: "rotate(90deg)",
-  },
-  "& .MuiAccordionSummary-content": {
-    marginLeft: theme.spacing(1),
-  },
-}));
-
-const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-  padding: theme.spacing(2),
-  borderTop: "1px solid rgba(0, 0, 0, .125)",
-}));
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -90,7 +60,7 @@ const Search = styled("div")(({ theme }) => ({
   backgroundColor: " #f0f5f5",
   marginRight: theme.spacing(2),
   marginLeft: 0,
-  width: "100%",
+  width: "63%",
   [theme.breakpoints.up("sm")]: {
     marginLeft: theme.spacing(3),
     width: "auto",
@@ -112,17 +82,71 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function App(props) {
+  const usersList = [
+    {
+      id: 1,
+      name: "Zorita Serrano",
+      position: "Software Engineer",
+      age: 23,
+      office: "San Francisco",
+      salary: "$115,000",
+     
+    },
+    {
+      id: 2,
+      name: "Angelica Ramos",
+      position: "Chief Executive Officer (CEO)",
+      age: 47,
+      office: "London",
+      salary: "$,200,000",
+    
+    },
+    {
+      id: 3,
+      name: "Bruno Nash",
+      position: "Software Engineer",
+      age: 38,
+      office: "London",
+      salary: "$163,500",
+
+    },
+    {
+      id: 4,
+      name: "Cedric Kelly",
+      position: "Senior Javascript Developer",
+      age: 23,
+      office: "Edinburgh",
+      salary: "$433,060",
+
+    },
+    {
+      id: 5,
+      name: "Suki Burks",
+      position: "Developer",
+      age: 53,
+      office: "London",
+      salary: "$114,500",
+ 
+    },
+    {
+      id: 6,
+      name: "Jackson Bradshaw",
+      position: "Director",
+      age: 65,
+      office: "New York",
+      salary: "$645,750",
+
+    },
+  ];
+
+  const [users, setUsers] = useState(usersList);
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  const [expanded, setExpanded] = React.useState("");
 
-  const handleChange = (panel) => (event, newExpanded) => {
-    setExpanded(newExpanded ? panel : false);
-  };
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -238,7 +262,7 @@ export default function App(props) {
   const navigate = useNavigate();
 
   const drawer = (
-    <div style={{backgroundColor:"#4e73df"}}>
+    <div >
       <Toolbar />
 
       <Divider />
@@ -255,66 +279,44 @@ export default function App(props) {
           <ListItemIcon>
             <SpeedIcon />
           </ListItemIcon>
-          <ListItemText primary="Dashboard"  />
+          <ListItemText primary="Dashboard" />
         </ListItem>
         <Divider />
         <Typography variant="caption" color="text.secondary" gutterBottom>
           INTERFACE
         </Typography>
         {/* COMPONENTS */}
-        <Accordion
-          expanded={expanded === "panel1"}
-          onChange={handleChange("panel1")}
-         
-        >
-  
-          <AccordionSummary aria-controls="panel1d-content" id="panel1d-header"  >
-            <ListItemIcon>
+        <Accordion>
+          <Accordion.Item eventKey="0">
+            <Accordion.Header>
               <SettingsIcon />
-            </ListItemIcon>
-            <Typography>Components</Typography>
-          </AccordionSummary>
-          <Typography variant="caption" color="text.secondary" gutterBottom>
-            CUSTOM COMPONENTS
-          </Typography>
-
-          <AccordionDetails>
-            <ListItem
-              button
-              key="buttons"
-              onClick={() => {
-                navigate("/buttons");
-              }}
-            >
-              <ListItemText primary="Buttons" />
-            </ListItem>
-            <ListItem
-              button
-              key="cards"
-              onClick={() => {
-                navigate("/cards");
-              }}
-            >
-              <ListItemText primary="Cards" />
-            </ListItem>
-          </AccordionDetails>
-        </Accordion>
-        {/* UTILITIES */}
-        <Accordion
-          expanded={expanded === "panel2"}
-          onChange={handleChange("panel2")}
-        >
-          <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
-            <ListItemIcon>
-              <BuildIcon />
-            </ListItemIcon>
-            <Typography>Utilities</Typography>
-          </AccordionSummary>
-          <Typography variant="caption" color="text.secondary" gutterBottom>
-            CUSTOM UTILITIES
-          </Typography>
-
-          <AccordionDetails>
+              Components
+            </Accordion.Header>
+            <Accordion.Body>
+              <ListItem
+                button
+                key="buttons"
+                onClick={() => {
+                  navigate("/buttons");
+                }}
+              >
+                <ListItemText primary="Buttons" />
+              </ListItem>
+              <ListItem
+                button
+                key="cards"
+                onClick={() => {
+                  navigate("/cards");
+                }}
+              >
+                <ListItemText primary="Cards" />
+              </ListItem>
+            </Accordion.Body>
+          </Accordion.Item>
+            {/* UTILITIES */}
+          <Accordion.Item eventKey="1">
+            <Accordion.Header><BuildIcon />Utilities</Accordion.Header>
+            <Accordion.Body>
             <ListItem
               button
               key="colors"
@@ -351,28 +353,15 @@ export default function App(props) {
             >
               <ListItemText primary="Others" />
             </ListItem>
-          </AccordionDetails>
-        </Accordion>
-        <Divider />
-        <Typography variant="caption" color="text.secondary" gutterBottom>
+            </Accordion.Body>
+          </Accordion.Item>
+          <Typography variant="caption" color="text.secondary" gutterBottom>
           ADD ONS
         </Typography>
         {/* PAGES */}
-        <Accordion
-          expanded={expanded === "panel3"}
-          onChange={handleChange("panel3")}
-        >
-          <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
-            <ListItemIcon>
-              <FolderIcon />
-            </ListItemIcon>
-            <Typography>Pages</Typography>
-          </AccordionSummary>
-          <Typography variant="caption" display="block" gutterBottom>
-            LOGIN SCREENS
-          </Typography>
-
-          <AccordionDetails>
+          <Accordion.Item eventKey="2" variant="primary">
+            <Accordion.Header><FolderIcon />Pages</Accordion.Header>
+            <Accordion.Body>
             <ListItem
               button
               key="login"
@@ -421,8 +410,17 @@ export default function App(props) {
             >
               <ListItemText primary="Blank Page" />
             </ListItem>
-          </AccordionDetails>
+            </Accordion.Body>
+          </Accordion.Item>
         </Accordion>
+      
+      
+        <Divider />
+        <Typography variant="caption" color="text.secondary" gutterBottom>
+          ADD ONS
+        </Typography>
+        {/* PAGES */}
+       
         <ListItem
           button
           key="charts"
@@ -520,7 +518,7 @@ export default function App(props) {
               <Typography variant="caption" display="block" gutterBottom>
                 Doulas Mcgee
               </Typography>
-              <AccountCircle color="disabled"/>
+              <AccountCircle color="disabled" />
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
@@ -546,7 +544,6 @@ export default function App(props) {
       >
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
-           
           container={container}
           variant="temporary"
           open={mobileOpen}
@@ -596,17 +593,28 @@ export default function App(props) {
           <Route exact path="/animations" element={<Animations />} />
           <Route exact path="/others" element={<Others />} />
           <Route exact path="/charts" element={<Chart />} />
-          <Route exact path="/tables" element={<Table />} />
+          <Route exact path="/tables" element={<TableData users={users} setUsers={setUsers}/>} />
+          <Route exact path="/404page" element={<NotFound />} />
+          <Route exact path="/blankpage" element={<BlankPage />} />
+            
+        <Route
+          path="/tables/edit-user/:id"
+          element={<EditUser users={users} setUsers={setUsers} />}
+        />
+        <Route
+          path="/tables/create-user"
+          element={<AddUser users={users} setUsers={setUsers} />}
+        />
         </Routes>
       </Box>
     </Box>
   );
 }
 
-function Table() {
+function BlankPage() {
   return (
     <div>
-      <h1>Tables</h1>
+      <h1>Blank Page</h1>
     </div>
-  )
+  );
 }

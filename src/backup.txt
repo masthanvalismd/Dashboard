@@ -1,23 +1,43 @@
-import * as React from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import DoneIcon from "@mui/icons-material/Done";
-import InfoIcon from "@mui/icons-material/Info";
-import WarningIcon from "@mui/icons-material/Warning";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Button from "@mui/material/Button";
-import GoogleIcon from '@mui/icons-material/Google';
+<Accordion
+          expanded={expanded === "panel1"}
+          onChange={handleChange("panel1")}
+         
+        >
+  
+          <AccordionSummary aria-controls="panel1d-content" id="panel1d-header"  >
+            <ListItemIcon>
+              <SettingsIcon />
+            </ListItemIcon>
+            <Typography>Components</Typography>
+          </AccordionSummary>
+          <Typography variant="caption" color="text.secondary" gutterBottom>
+            CUSTOM COMPONENTS
+          </Typography>
 
-export function Buttons() {
-  return (
-    <div className="button">
-      <h2>Buttons</h2>
-      <div className="buttons">
-        <Card sx={{ maxWidth: 600 }}>
+          <AccordionDetails>
+            <ListItem
+              button
+              key="buttons"
+              onClick={() => {
+                navigate("/buttons");
+              }}
+            >
+              <ListItemText primary="Buttons" />
+            </ListItem>
+            <ListItem
+              button
+              key="cards"
+              onClick={() => {
+                navigate("/cards");
+              }}
+            >
+              <ListItemText primary="Cards" />
+            </ListItem>
+          </AccordionDetails>
+        </Accordion>
+
+
+                <Card sx={{ maxWidth: 600 }}>
           <CardContent>
             <Typography sx={{ fontSize: 18 }} color="primary" gutterBottom>
               Circle Buttons
@@ -104,7 +124,3 @@ export function Buttons() {
             <Button variant="contained" color="primary"><FacebookIcon/>.btn-facebook</Button>
           </CardContent>
         </Card>
-      </div>
-    </div>
-  );
-}

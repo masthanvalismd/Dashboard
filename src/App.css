@@ -41,3 +41,26 @@
   gap: 10px;
   
 }
+
+.table-data{
+  display:flex;
+  padding-top:5rem;
+  margin-left:auto;
+  margin-right:auto;
+  width:100%;
+}
+.row-actions{
+  display:flex;
+  justify-content: flex-start;
+}
+.textField-add{
+  margin-top:4rem;
+}
+.textField-edit{
+  margin-top:5rem;
+}
+.textField-h2{
+  margin-bottom: 1rem;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 800;
+}
