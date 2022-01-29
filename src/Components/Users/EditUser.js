@@ -48,7 +48,7 @@ export function EditUser({ users, setUsers }) {
 
   return (
     <div className="textField-edit">
-      <h2 className="textField-h2">Form to Edit the User Details</h2>
+      
       <TextField
         label="Enter a Name"
         variant="standard"
