@@ -585,7 +585,7 @@ export default function App(props) {
       >
         <Toolbar />
         <Routes>
-          <Route exact path="/dashboard" element={<Dashboard />} />
+          <Route exact path="/" element={<Dashboard />} />
           <Route exact path="/buttons" element={<Buttons />} />
           <Route exact path="/cards" element={<Cards />} />
           <Route exact path="/colors" element={<Colors />} />
